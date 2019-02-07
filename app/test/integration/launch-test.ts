@@ -5,6 +5,8 @@
 import { Application } from 'spectron'
 import * as path from 'path'
 
+import { getLogsDirectory } from '../helpers/logs'
+
 describe('App', function(this: any) {
   let app: Application
 
@@ -24,9 +26,16 @@ describe('App', function(this: any) {
 
     const root = path.resolve(__dirname, '..', '..', '..')
 
+    const logsDir = getLogsDirectory()
+
+    console.log(`Running Spectron and logging to ${logsDir}`)
+
     app = new Application({
       path: appPath,
       args: [path.join(root, 'out')],
+      chromeDriverLogPath: path.join(logsDir, 'chrome-driver.log'),
+      // TODO: this is too noisy and is probably not helpful if the window doesn't launch
+      //webdriverLogPath: path.join(logsDir, 'web-driver'),
     })
     return app.start()
   })
