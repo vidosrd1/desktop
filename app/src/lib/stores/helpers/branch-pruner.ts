@@ -1,7 +1,6 @@
 import { Repository } from '../../../models/repository'
 import { RepositoriesStore } from '../repositories-store'
 import { Branch, BranchType } from '../../../models/branch'
-import { GitStoreCache } from '../git-store-cache'
 import {
   getMergedBranches,
   deleteBranch,
@@ -32,7 +31,6 @@ export class BranchPruner {
 
   public constructor(
     private readonly repository: Repository,
-    private readonly gitStoreCache: GitStoreCache,
     private readonly repositoriesStore: RepositoriesStore,
     private readonly repositoriesStateCache: RepositoryStateCache,
     private readonly onPruneCompleted: (
