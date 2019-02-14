@@ -92,6 +92,7 @@ import { isConflictedFile } from '../lib/status'
 import { PopupType, Popup } from '../models/popup'
 import { OversizedFiles } from './changes/oversized-files-warning'
 import { UsageStatsChange } from './usage-stats-change'
+import { RebaseConflictsDialog } from './rebase'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -1505,6 +1506,36 @@ export class App extends React.Component<IAppProps, IAppState> {
             repository={popup.repository}
             context={popup.context}
             onDismissed={this.onPopupDismissed}
+          />
+        )
+      case PopupType.RebaseConflicts:
+        const { selectedState } = this.state
+        if (
+          selectedState === null ||
+          selectedState.type !== SelectionType.Repository
+        ) {
+          return null
+        }
+
+        const {
+          workingDirectory,
+          conflictState,
+        } = selectedState.state.changesState
+
+        if (conflictState === null || conflictState.kind === 'merge') {
+          return null
+        }
+
+        return (
+          <RebaseConflictsDialog
+            dispatcher={this.props.dispatcher}
+            repository={popup.repository}
+            workingDirectory={workingDirectory}
+            manualResolutions={conflictState.manualResolutions}
+            onDismissed={this.onPopupDismissed}
+            openFileInExternalEditor={this.openFileInExternalEditor}
+            resolvedExternalEditor={this.state.resolvedExternalEditor}
+            openRepositoryInShell={this.openInShell}
           />
         )
       default:
