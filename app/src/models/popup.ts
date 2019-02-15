@@ -157,4 +157,6 @@ export type Popup =
   | {
       type: PopupType.RebaseConflicts
       repository: Repository
+      baseBranch?: string
+      targetBranch: string
     }
