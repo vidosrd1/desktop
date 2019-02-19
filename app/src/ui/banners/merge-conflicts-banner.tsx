@@ -11,6 +11,7 @@ interface IMergeConflictsBannerProps {
   readonly ourBranch: string
   /** merge conflicts dialog popup to be shown by this banner */
   readonly popup: Popup
+
   readonly onDismissed: () => void
 }
 
