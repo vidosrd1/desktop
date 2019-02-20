@@ -1806,8 +1806,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     const progress = state.pushPullFetchProgress
 
     const tipState = state.branchesState.tip.kind
-
-    // TODO: where shall we pull this from?
     const { pullWithRebase } = state.branchesState
 
     return (
